@@ -40,4 +40,9 @@ public class GarbageBag : InteractableBag, IGarbageBag
 
         }
     }
+
+    public void MergeBag(GameObject firstBag, GameObject secondBag, GameObject newBag)
+    {
+        throw new System.NotImplementedException();
+    }
 }
