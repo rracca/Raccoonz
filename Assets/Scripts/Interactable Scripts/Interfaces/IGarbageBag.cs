@@ -3,5 +3,5 @@
 public interface IGarbageBag
 {
     void DivideBag(GameObject bagToDivide);
-    void MergeBag(GameObject firstBagToMerge, GameObject secondBagToMerge);
+    void MergeBag(GameObject firstBagToMerge, GameObject secondBagToMerge, Transform mergedBagTransform);
 }

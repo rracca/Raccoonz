@@ -2,11 +2,17 @@
 
 public class Enemy : Actor, IEnemyRaccoonController
 {
-    public GameObject smallerBag;
-    public Enemy(int maxHeldObject = 1) : base("Enemy", 100) 
+    private const int MAX_HELD_OBJECTS = 1;
+
+    void Start ()
     {
-        this.maxHeldObject = maxHeldObject;
+        this.actorType = "Enemy";
+        this.healthPoints = 100;
+        this.maxHeldObject = MAX_HELD_OBJECTS;
+
+        InitializeActor();
     }
+
     public void OpenBag()
     {
         InteractableBag bag = CollidedObject.GetComponent(typeof(InteractableBag)) as InteractableBag;

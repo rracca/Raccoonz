@@ -24,17 +24,19 @@ public class GarbageBag : InteractableBag, IGarbageBag
             Debug.Log("Unable to Merge Bag. Error: " + ex);
         }
     }
-    public void MergeBag(GameObject firstBagToMerge, GameObject secondBagToMerge)
+    public void MergeBag(GameObject firstBagToMerge, GameObject secondBagToMerge, Transform mergedBagTransform)
     {
         try
         {
-            Transform mergedBagPosition = firstBagToMerge.transform;
             BagPool.SharedInstance.ReturnBag(firstBagToMerge);
             BagPool.SharedInstance.ReturnBag(secondBagToMerge);
 
             GameObject mergedBag = BagPool.SharedInstance.GetBag(BagType.Garbage, BagSize.Large);
 
-            mergedBag.transform.position = mergedBagPosition.position;
+            //putting distance of spawning object at least one player scale away
+            //edit since this might cause issues for spawning
+            //check if the position is free
+            mergedBag.transform.position = mergedBagTransform.position + mergedBagTransform.localScale;
             mergedBag.SetActive(true);
         }
         catch(System.Exception ex)

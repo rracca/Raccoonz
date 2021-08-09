@@ -2,6 +2,7 @@
 
 public abstract class InteractableBag : Interactables
 {
+    [SerializeField]
     private BagSize size;
     private BagType type;
     private BagStatus status;

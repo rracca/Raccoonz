@@ -18,6 +18,7 @@ public class BagPool : MonoBehaviour
 
     void Start()
     {
+        bagPool = new Queue<GameObject>();
         if (bagPool.Count == 0 && numberOfBags < MAX_NUMBER_OF_BAGS)
         {
             InitializeBagPool();
@@ -30,11 +31,11 @@ public class BagPool : MonoBehaviour
 
     void InitializeBagPool()
     {
-        bagPool = new Queue<GameObject>();
         GameObject newBag;
         for (int counter = 0; counter < numberOfBags; counter++)
         {
-            newBag = new GameObject("Bag#"+counter.ToString());
+            newBag = new GameObject("Bag#"+ (counter + 1).ToString());
+            newBag.transform.SetParent(this.transform);
             bagPool.Enqueue(newBag);
         }
     }

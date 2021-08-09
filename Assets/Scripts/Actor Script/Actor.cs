@@ -2,19 +2,19 @@
 using UnityEngine;
 public abstract class Actor : MonoBehaviour
 {
-    private string actorType;
     private GameObject collidedObject;
     private Stack<GameObject> pickedUpObject;
+    protected string actorType;
     protected float healthPoints;
     protected int maxHeldObject;
     public GameObject CollidedObject { get => collidedObject; set => collidedObject = value; }
     public Stack<GameObject> PickedUpObject { get => pickedUpObject; set => pickedUpObject = value; }
 
-    protected Actor (string ActorType, float HealthPoints) {
-        actorType = ActorType;
-        healthPoints = HealthPoints;
+    protected void InitializeActor() 
+    {
         pickedUpObject = new Stack<GameObject>();
     }
+
     protected virtual void PickUpBag() 
     {
         InteractableBag bag = CollidedObject.GetComponent(typeof(InteractableBag)) as InteractableBag;
@@ -42,10 +42,12 @@ public abstract class Actor : MonoBehaviour
         }
     }
 
+    //Add indicator visually on which bin is 
     void OnTriggerEnter(Collider other) {
         CollidedObject = other.gameObject;
     }
     void OnTriggerExit(Collider other) {
-        CollidedObject = null;
+        if (CollidedObject.GetInstanceID() == other.GetInstanceID())
+            CollidedObject = null;
     }
 } 

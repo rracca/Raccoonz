@@ -2,10 +2,15 @@
 
 public class Player : Actor, IPlayerController
 { 
-    public GameObject regularBag; 
-    public Player(int maxHeldObject = 2) : base("Player", 100) 
+    private const int MAX_HELD_OBJECTS = 2;
+    
+    void Start()
     {
-        this.maxHeldObject = maxHeldObject;
+        this.actorType = "Player";
+        this.healthPoints = 100;
+        this.maxHeldObject = MAX_HELD_OBJECTS;
+
+        InitializeActor();
     }
 
     void Update() {
@@ -16,7 +21,20 @@ public class Player : Actor, IPlayerController
     {
         //Interact with Bag
         if (Input.GetKeyDown(KeyCode.Z))
-            PickUpBag();
+        {
+            if (PickedUpObject.Count < MAX_HELD_OBJECTS && PickedUpObject.Count >= 0)
+            { 
+                PickUpBag(); 
+            } 
+            else if (PickedUpObject.Count == MAX_HELD_OBJECTS)
+            {
+                CombineBag();
+            }
+            else
+            {
+                Debug.Log("Number of objects held is out of bounds.");
+            }
+        }
         //Open / Close Bin
         if (Input.GetKeyDown(KeyCode.X))
             OpenCloseBin();
@@ -59,14 +77,21 @@ public class Player : Actor, IPlayerController
     }
     public void CombineBag()
     {
-        //Combine 
-        GarbageBag bag = CollidedObject.GetComponent(typeof(GarbageBag)) as GarbageBag;
-        if (bag != null && PickedUpObject.Count == maxHeldObject)
+        try
         {
-            //Get the top part of the stack.
-            GameObject recentBag = PickedUpObject.Pop();
-            bag.MergeBag(PickedUpObject.Pop(), recentBag);
-            PickedUpObject.Clear();
+            //Combines the top two of the stack of PickedUpObjects given that they're both small Garbage Bags.
+            GameObject firstBagToMerge = PickedUpObject.Pop();
+            GameObject secondBagToMerge = PickedUpObject.Pop();
+
+            if (firstBagToMerge.GetComponent<GarbageBag>().Size == BagSize.Small && secondBagToMerge.GetComponent<GarbageBag>().Size == BagSize.Small)
+            {
+                //passing the transform of the current player
+                firstBagToMerge.GetComponent<GarbageBag>().MergeBag(firstBagToMerge, secondBagToMerge, this.transform);
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log("Error: " + ex);
         }
     }
     public void ScareAway()
