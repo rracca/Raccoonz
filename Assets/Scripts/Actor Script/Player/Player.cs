@@ -42,6 +42,8 @@ public class Player : Actor, IPlayerController
         {
             GameObject bagToDeposit = PickedUpObject.Pop();
             //Tests that if it's the wrong bin, it will get pushed back to the hands of the player
+
+            //allow different bag then implement fines for wrong bags
             if (!bin.DepositBag(bagToDeposit))
             {
                 PickedUpObject.Push(bagToDeposit);
@@ -63,7 +65,7 @@ public class Player : Actor, IPlayerController
         {
             //Get the top part of the stack.
             GameObject recentBag = PickedUpObject.Pop();
-            bag.MergeBag(PickedUpObject.Pop(), recentBag, regularBag);
+            bag.MergeBag(PickedUpObject.Pop(), recentBag);
             PickedUpObject.Clear();
         }
     }
