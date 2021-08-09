@@ -17,7 +17,7 @@ public class Enemy : Actor, IEnemyRaccoonController
     {
         GarbageBag bag = CollidedObject.GetComponent(typeof(GarbageBag)) as GarbageBag;
         if (bag != null)
-            bag.DivideBag(CollidedObject, smallerBag);
+            bag.DivideBag(CollidedObject);
     }
 
     public void GetScared()

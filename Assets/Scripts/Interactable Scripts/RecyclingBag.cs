@@ -6,8 +6,4 @@ public class RecyclingBag : InteractableBag
     {
         
     }
-    public override void DepositedBag(GameObject bag)
-    {
-        bag.GetComponent<RecyclingBag>().Status = BagStatus.Deposited;
-    }
 }

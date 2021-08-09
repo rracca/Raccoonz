@@ -52,7 +52,7 @@ public abstract class InteractableBin : Interactables
             if (binContents.Count < capacity && IsOpen && bagToDeposit.Size == acceptableBagSize && bagToDeposit.Type == acceptableBagType)
             {
                 binContents.Push(bag);
-                bagToDeposit.DepositedBag(bag);
+                bagToDeposit.DepositedBag();
                 capacity--;
                 return true;
             }

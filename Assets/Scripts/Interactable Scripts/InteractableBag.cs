@@ -18,9 +18,13 @@ public abstract class InteractableBag : Interactables
     public BagStatus Status { get => status; set => status = value; }
     public BagSize Size { get => size; set => size = value; }
 
-    public virtual void OpenCloseBag()
+    public void OpenCloseBag()
     {
-        IsOpen = !IsOpen;
+        this.isOpen = !this.isOpen;
+    }
+    public void DepositedBag()
+    {
+        this.status = BagStatus.Deposited;
     }
 
     public virtual void CollectedBag(GameObject bag)
@@ -34,8 +38,6 @@ public abstract class InteractableBag : Interactables
             collectedBag.Status = BagStatus.Collected;
         }
     }
-
-    public abstract void DepositedBag(GameObject bag);
 }
 
 public enum BagStatus
